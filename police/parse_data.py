@@ -5,17 +5,7 @@ from pandas import DataFrame, Series
 import json
 
 
-
-def get_counts(sequence):
-    counts = defaultdict(int)  # values will initialize to 0
-    for x in sequence:
-        counts[x] += 1
-    return counts
-
-
 def create_grid(records):
-    grid_points = {'horizontal': [], 'vertical': []}
-    grid = []
 
     latitudes = records['lat']
     longitudes = records['long']
@@ -31,8 +21,6 @@ def create_grid(records):
     right_up_corner = (max_lat, max_long)
     right_down_corner = (min_lat, max_long)
 
-    corners = [left_up_corner, right_up_corner, right_down_corner, left_down_corner]
-
     vertical_distance = great_circle(left_up_corner, right_up_corner).miles
     horizontal_distance = great_circle(left_up_corner, left_down_corner).miles
 
@@ -40,29 +28,6 @@ def create_grid(records):
     vertical_section = abs(max_long - min_long) / float(vertical_distance)
 
     return horizontal_section, vertical_section
-
-    '''
-
-    # calculate vertical points
-    current_long = min_long
-    while current_long < max_long:
-        grid_points['vertical'].append(current_long)
-        current_long += horizontal_section
-
-    # calculate horizontal points
-    current_lat = min_lat
-    while current_lat < max_lat:
-        grid_points['horizontal'].append(current_lat)
-        current_lat += vertical_section
-
-    # make sections
-    for i in range(len(grid_points['vertical']) - 1):
-        for j in range(len(grid_points['horizontal']) - 1):
-
-            grid.append([(grid_points['vertical'][i], grid_points['horizontal'][j]),
-                         (grid_points['vertical'][i+1]), grid_points['horizontal'][j+1]])
-
-    '''
 
 
 def search_near_events(df, event):
@@ -81,13 +46,6 @@ def search_near_events(df, event):
 
     return events
 
-    '''
-    hsection = 0.0144691017081
-    vsection = 0.0258757383572
-    '''
-
-    # return df.loc[(df['lat'] >= (e['lat'] + hsection)) | (df['lat'])]
-
 
 related_events = {}
 path = 'CityEvents.txt'
@@ -97,17 +55,19 @@ excluded = []
 records = pd.read_csv(path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
                       header=None, delim_whitespace=True)
 
-frame = DataFrame(records)
-# types_count = frame['type'].value_counts()
-victims_count = frame.sort(columns='affected', ascending=False)
-vc_above15k = frame[frame['affected'] > 15000]
-# print len(vc_above15k)
-# print frame[:10]
-t = frame.loc[100]
-# print '>>>>', frame.loc[(frame['wday'] == 'Mon') & (frame['affected'] == 26)].values
 
-#events = search_near_events(frame, t)
-#print len(events)
+# # types_count = frame['type'].value_counts()
+# victims_count = frame.sort(columns='affected', ascending=False)
+# vc_above15k = frame[frame['affected'] > 15000]
+# # print len(vc_above15k)
+# # print frame[:10]
+# t = frame.loc[100]
+# # print '>>>>', frame.loc[(frame['wday'] == 'Mon') & (frame['affected'] == 26)].values
+#
+# #events = search_near_events(frame, t)
+# #print len(events)
+
+frame = DataFrame(records)
 
 i=0
 for d in frame.iterrows():
@@ -120,8 +80,7 @@ for d in frame.iterrows():
         print i
     i += 1
 
-#print len(related_events)
-#print related_events
+
 with open('related_events.txt', 'w') as fp:
     json.dump(related_events, fp)
 

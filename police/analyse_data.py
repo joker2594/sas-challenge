@@ -1,9 +1,6 @@
 import json
 import pandas as pd
-import collections
-from collections import defaultdict, Counter
-from geopy.distance import vincenty, great_circle
-from pandas import DataFrame, Series
+from pandas import DataFrame
 import os
 
 
@@ -12,17 +9,16 @@ related_events_path = os.path.join(BASE_DIR, 'police/related_events.txt')
 city_event_path = os.path.join(BASE_DIR, 'police/CityEvents.txt')
 
 related_events = json.load(open(related_events_path))
-i = 0
 
 records = pd.read_csv(city_event_path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
                       header=None, delim_whitespace=True)
 
 frame = DataFrame(records)
 events = {}
-important_events={}
+important_events = {}
 BAD_EVENTS = ['ROBBERY', 'MURDER', 'MUGGING', 'FRAUD']
-IMPORTANCE = { 'MURDER': 10, 'ROBBERY': 9, 'MUGGING': 8, 'FRAUD': 7, 'RACE': 2, 'SPEECH': 3, 'RIVER': 1, 'FOOTBALL': 2,
-               'DEMONSTRATION': 2, 'CONCERT': 1, 'ATHLETICS': 1, 'CHARITY': 2, 'MARCH': 2, 'PICKET': 3}
+IMPORTANCE = {'MURDER': 10, 'ROBBERY': 9, 'MUGGING': 8, 'FRAUD': 7, 'RACE': 2, 'SPEECH': 3, 'RIVER': 1, 'FOOTBALL': 2,
+              'DEMONSTRATION': 2, 'CONCERT': 1, 'ATHLETICS': 1, 'CHARITY': 2, 'MARCH': 2, 'PICKET': 3}
 
 
 # compute the number of crimes in each area
@@ -57,6 +53,7 @@ def build():
             important_events[e]['affected'] += nested_event['affected']
 
 
+# get event with most importance
 def get_highest_threat():
     highest_threat = 0
     for e in important_events:
@@ -66,11 +63,13 @@ def get_highest_threat():
     return highest_threat
 
 
+# convert importance to percentage
 def set_percentages():
     for e in important_events:
         important_events[e]['priority_percentage'] = float(important_events[e]['importance']*100/get_highest_threat())
 
 
+# get a dictionary of important events
 def get_most_important_events():
     set_crimes_number()
     set_important_events()
@@ -80,6 +79,7 @@ def get_most_important_events():
     return important_events
 
 
+# get a json of most important events
 def get_most_important_events_json():
     data = get_most_important_events()
     data_to_json_dict = {}
