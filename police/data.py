@@ -1,6 +1,8 @@
 import pandas as pd
 from collections import defaultdict, Counter
 from geopy.distance import vincenty, great_circle
+from pandas import DataFrame, Series
+
 
 
 def get_counts(sequence):
@@ -36,6 +38,10 @@ def create_grid(records):
     horizontal_section = abs(max_lat - min_lat) / float(horizontal_distance)
     vertical_section = abs(max_long - min_long) / float(vertical_distance)
 
+    return horizontal_section, vertical_section
+
+    '''
+
     # calculate vertical points
     current_long = min_long
     while current_long < max_long:
@@ -55,23 +61,62 @@ def create_grid(records):
             grid.append([(grid_points['vertical'][i], grid_points['horizontal'][j]),
                          (grid_points['vertical'][i+1]), grid_points['horizontal'][j+1]])
 
-    return grid
+    '''
 
+
+def search_near_events(df, event):
+    events = []
+    fe = event[1]
+    fe_point = (fe['lat'], fe['long'])
+
+    for d in df.iterrows():
+        se = d[1]
+        se_point = (se['lat'], se['long'])
+
+        if great_circle(fe_point, se_point).miles < 1:
+            events.append(d)
+
+    return events
+
+    '''
+    hsection = 0.0144691017081
+    vsection = 0.0258757383572
+    '''
+
+    # return df.loc[(df['lat'] >= (e['lat'] + hsection)) | (df['lat'])]
+
+
+related_events = {}
 path = 'CityEvents.txt'
 records = pd.read_csv(path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
                       header=None, delim_whitespace=True)
 
-victims = records['affected']
-count_victims = get_counts(victims)
+frame = DataFrame(records)
+# types_count = frame['type'].value_counts()
+victims_count = frame.sort(columns='affected', ascending=False)
+vc_above15k = frame[frame['affected'] > 15000]
+# print len(vc_above15k)
+# print frame[:10]
+t = frame.loc[100]
+# print '>>>>', frame.loc[(frame['wday'] == 'Mon') & (frame['affected'] == 26)].values
 
-'''
-types = records['type']
-type_count = get_counts(types)
-counts = Counter(type_count)
-print latitudes.min()
-print latitudes.max()
-print
-print longitudes.min()
-print longitudes.max()
-'''
+#events = search_near_events(frame, t)
+#print len(events)
+
+i=0
+for d in frame.iterrows():
+
+    if i >= 10:
+        break
+
+    near_events = search_near_events(frame, d)
+    related_events[i] = near_events
+    i += 1
+
+for event in related_events:
+    print event, ' --> ', len(related_events[event])
+    print '-----------------------------------------------'
+    print
+
+
 
