@@ -2,6 +2,7 @@ import pandas as pd
 from collections import defaultdict, Counter
 from geopy.distance import vincenty, great_circle
 from pandas import DataFrame, Series
+import json
 
 
 
@@ -74,7 +75,7 @@ def search_near_events(df, event):
         se_point = (se['lat'], se['long'])
 
         if great_circle(fe_point, se_point).miles <= 1:
-            events.append(d)
+            events.append(int(d[0]))
             if se['type'] in BAD_EVENTS:
                 excluded.append(d[0])
 
@@ -115,10 +116,16 @@ for d in frame.iterrows():
         if d[0] not in excluded:
             near_events = search_near_events(frame, d)
             related_events[i] = near_events
-        print i, '-->', excluded
+
+        print i
     i += 1
 
-print len(related_events)
+#print len(related_events)
+#print related_events
+with open('related_events.txt', 'w') as fp:
+    json.dump(related_events, fp)
+
+
 '''
 for event in related_events:
     print event, ' --> ', len(related_events[event])
