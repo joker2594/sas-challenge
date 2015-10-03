@@ -5,6 +5,7 @@ html {
 }
 
 body {
+  overflow: hidden;
   font-family: Open Sans;
   color: #f3f4f5;
   text-shadow: 1px 1px #050d17;
@@ -21,23 +22,26 @@ body {
   overflow: hidden;
   white-space: nowrap;
   background-color: #1b4376;
-  width: 25%;
-  position: absolute;
-  right: 0;
+  width: 100%;
+  height: 35px;
+  top: 0;
+  position: relative;
 }
 
 #wrapper {
-  overflow: hidden;
+  width: 30%;
+  height: 100%;
+  float: right;
+  overflow-y: scroll;
 }
 
 #main {
   font-size: 20px;
-  margin-top: 80px;
   position: relative;
-  width: 25%;
+
+  width: 100%;
   text-align: center;
   float: right;
-  display: inline-block;
 }
 
 .box1 {
@@ -47,7 +51,7 @@ body {
 #map {
   text-shadow: none;
   height: 100%;
-  width: 75%;
+  width: 70%;
   background-color: #CCC;
   position: absolute;
   float: left;
@@ -55,7 +59,7 @@ body {
 
 button {
   font-size: 20px;
-  padding: 3px;
+  padding: 2px;
   padding-left: 20px;
   padding-right: 20px;
   color: #f3f4f5;
@@ -83,4 +87,64 @@ input {
 select {
   font-size: 16px;
   border: 1px solid #1b4376;
+}
+
+.result {
+  border-bottom: 1px solid #0d213b;
+  height: 50px;
+  padding-left: 5px;
+}
+
+.officers {
+  font-size: 10px;
+  float: right;
+}
+
+.info {
+  float: left;
+}
+
+.police {
+  position: relative;
+  float: right;
+}
+
+.darker {
+  background-color: #183c6a;
+  padding-left: 5px;
+  padding: 20px;
+  width: 200px;
+  font-size: 21px;
+}
+
+table {
+  font-size: 16px;
+  text-align: left;
+}
+
+.number {
+  margin: 1px;
+  padding-left: 4px;
+  padding-right: 4px;
+  font-size: 20px;
+  float: right;
+  position: relative;
+  border-radius: 5px;
+  background-color: #102846;
+}
+
+.postcode {
+  font-size: 30px;
+  background-color: #183c6a;
+  text-align: center;
+  width: 150px;
+}
+
+.info {
+  padding-top: 5px;
+  background-color: #183c6a;
+  text-align: center;
+  font-size: 16px;
+  height: 148px;
+  width: 240px;
 }

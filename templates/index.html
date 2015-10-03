@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Main -{% endblock %}
+{% block title %}Officer Deployment{% endblock %}
 
 {% block body_block %}
-    Groups of:
-    <select>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-    </select>
-    <br/>
-    Police Officers available:
-    <input type="number" name="officers" value="100">
-    <br/>
-    <br/>
-    <button type="button">Analyse</button>
-    <button type="button">Deploy</button>
+        <br/>
+        Groups of:
+        <select>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <br/>
+        Police Officers available:
+        <input type="number" name="officers" value="100">
+        <br/>
+        <br/>
+        <button type="button" onclick="deploy()">Analyse</button>
 {% endblock %}
