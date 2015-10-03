@@ -6,7 +6,7 @@ from pandas import DataFrame, Series
 
 
 def get_counts(sequence):
-    counts = defaultdict(int) # values will initialize to 0
+    counts = defaultdict(int)  # values will initialize to 0
     for x in sequence:
         counts[x] += 1
     return counts
@@ -73,8 +73,10 @@ def search_near_events(df, event):
         se = d[1]
         se_point = (se['lat'], se['long'])
 
-        if great_circle(fe_point, se_point).miles < 1:
+        if great_circle(fe_point, se_point).miles <= 1:
             events.append(d)
+            if se['type'] in BAD_EVENTS:
+                excluded.append(d[0])
 
     return events
 
@@ -88,6 +90,9 @@ def search_near_events(df, event):
 
 related_events = {}
 path = 'CityEvents.txt'
+BAD_EVENTS = ['ROBBERY', 'MURDER', 'MUGGING', 'FRAUD']
+excluded = []
+
 records = pd.read_csv(path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
                       header=None, delim_whitespace=True)
 
@@ -106,17 +111,21 @@ t = frame.loc[100]
 i=0
 for d in frame.iterrows():
 
-    if i >= 10:
-        break
-
-    near_events = search_near_events(frame, d)
-    related_events[i] = near_events
+    if d[1]['type'] in BAD_EVENTS:
+        if d[0] not in excluded:
+            near_events = search_near_events(frame, d)
+            related_events[i] = near_events
+        print i, '-->', excluded
     i += 1
 
+print len(related_events)
+'''
 for event in related_events:
     print event, ' --> ', len(related_events[event])
     print '-----------------------------------------------'
     print
+'''
+
 
 
 
