@@ -4,13 +4,17 @@ import collections
 from collections import defaultdict, Counter
 from geopy.distance import vincenty, great_circle
 from pandas import DataFrame, Series
+import os
 
 
-related_events = json.load(open('related_events.txt'))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+related_events_path = os.path.join(BASE_DIR, 'police/related_events.txt')
+city_event_path = os.path.join(BASE_DIR, 'police/CityEvents.txt')
+
+related_events = json.load(open(related_events_path))
 i = 0
 
-path = 'CityEvents.txt'
-records = pd.read_csv(path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
+records = pd.read_csv(city_event_path, names=['wday', 'month', 'day', 'time', 'tz', 'year', 'lat', 'long', 'type', 'affected'],
                       header=None, delim_whitespace=True)
 
 frame = DataFrame(records)
