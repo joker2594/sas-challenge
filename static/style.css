@@ -100,10 +100,6 @@ select {
   float: right;
 }
 
-.info {
-  float: left;
-}
-
 .police {
   position: relative;
   float: right;
@@ -145,6 +141,6 @@ table {
   background-color: #183c6a;
   text-align: center;
   font-size: 16px;
-  height: 148px;
+  height: 160px;
   width: 240px;
 }
