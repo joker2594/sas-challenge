@@ -1,0 +1,86 @@
+html {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Open Sans;
+  color: #f3f4f5;
+  text-shadow: 1px 1px #050d17;
+  background-color: #315583;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
+
+#header {
+  font-size: 30px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  overflow: hidden;
+  white-space: nowrap;
+  background-color: #1b4376;
+  width: 25%;
+  position: absolute;
+  right: 0;
+}
+
+#wrapper {
+  overflow: hidden;
+}
+
+#main {
+  font-size: 20px;
+  margin-top: 80px;
+  position: relative;
+  width: 25%;
+  text-align: center;
+  float: right;
+  display: inline-block;
+}
+
+.box1 {
+  margin-left: 10px;
+}
+
+#map {
+  text-shadow: none;
+  height: 100%;
+  width: 75%;
+  background-color: #CCC;
+  position: absolute;
+  float: left;
+}
+
+button {
+  font-size: 20px;
+  padding: 3px;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #f3f4f5;
+  background: #1b4376;
+  border: solid 2px #8da1ba;
+}
+
+button:hover {
+  background: #8da1ba;
+  color: #1b4376;
+  border: solid 2px #1b4376;
+}
+
+button:active {
+  background: #8da1ba;
+  color: #0d213b;
+}
+
+input {
+  width: 50px;
+  font-size: 16px;
+  border: 1px solid #1b4376;
+}
+
+select {
+  font-size: 16px;
+  border: 1px solid #1b4376;
+}
