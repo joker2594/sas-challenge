@@ -2,6 +2,7 @@ import json
 import pandas as pd
 from pandas import DataFrame
 import os
+import operator
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -39,11 +40,25 @@ def set_important_events(value=10):
             important_events[event] = events[event]
 
 
+def get_most_common(events):
+    types = {'MURDER': 0, 'ROBBERY': 0, 'MUGGING': 0, 'FRAUD': 0, 'RACE': 0, 'SPEECH': 0, 'RIVER': 0, 'FOOTBALL': 0,
+              'DEMONSTRATION': 0, 'CONCERT': 0, 'ATHLETICS': 0, 'CHARITY': 0, 'MARCH': 0, 'PICKET': 0}
+    for event in events:
+        e = frame.loc[event]
+        if e['type'] in types.keys():
+            types[e['type']] += 1
+
+    sorted_types = sorted(types.items(), key=operator.itemgetter(1))
+
+    return sorted_types[::-1][0]
+
+
 # update the most important events with the rest of the fields
 def build():
     for e in important_events:
         important_events[e]['importance'] = 0
         important_events[e]['affected'] = 0
+        important_events[e]['most_common'] = get_most_common(important_events[e]['near_events'])
 
         for event in important_events[e]['near_events']:
             nested_event = frame.loc[event]
@@ -51,6 +66,8 @@ def build():
             important_events[e]['long'] = nested_event['long']
             important_events[e]['importance'] += IMPORTANCE[nested_event['type']] * nested_event['affected']
             important_events[e]['affected'] += nested_event['affected']
+
+
 
 
 # get event with most importance
