@@ -30,7 +30,8 @@ function analyse() {
             center: glasgow,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var infowindow = new google.maps.InfoWindow;
+
+        var infowindow = new google.maps.InfoWindow();
         var marker, i;
         for (i = 0; i < locations.length; i++) {
             marker = new google.maps.Marker({
@@ -38,10 +39,14 @@ function analyse() {
                 map: map,
                 label: labels[labelIndex++ % labels.length],
             });
+
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     // can edit locations[i][0] to be the text in label
-                    infowindow.setContent(locations[i][0].toString);
+                    var content = '<div style="color:black;"><span style="color:red; text-align:center; font-size: 2em">'
+                        + locations[i][0] + ', ' + locations[i][1] + '</span><br />' + '<b>Most common event: ' +
+                        '</b>' + locations[i][3] + '<br />' + '<b>Number of people: </b>' + locations[i][4] + '</div>';
+                    infowindow.setContent(content);
                     infowindow.open(map, marker);
                 }
             })(marker, i));

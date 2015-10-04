@@ -50,7 +50,7 @@ def get_most_common(events):
 
     sorted_types = sorted(types.items(), key=operator.itemgetter(1))
 
-    return sorted_types[::-1][0]
+    return sorted_types[::-1][0][0]
 
 
 # update the most important events with the rest of the fields
@@ -104,7 +104,9 @@ def get_most_important_events_json():
 
     for event in data:
         data_to_json_dict[event] = {'lat': data[event]['lat'], 'long': data[event]['long'],
-                                    'percentage': data[event]['priority_percentage']}
+                                    'percentage': data[event]['priority_percentage'],
+                                    'most_common': data[event]['most_common'],
+                                    'affected': str(data[event]['affected'])}
 
     for s in sorted(data_to_json_dict.iteritems(), key=lambda (x, y): y['percentage']):
         data_list.append({s[0]: s[1]})
@@ -113,8 +115,6 @@ def get_most_important_events_json():
     data_json = json.dumps(data_list_to_json)
 
     return data_json
-
-
 
 
 

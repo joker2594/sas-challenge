@@ -38,7 +38,8 @@ def get_locations(request):
         locations = []
         for location in data:
             for l in location:
-                locations.append((float(location[l]['lat']), float(location[l]['long']), 10))
+                locations.append((float(location[l]['lat']), float(location[l]['long']), 10,
+                                  str(location[l]['most_common']), str(location[l]['affected'])))
 
         locations_json = json.dumps(locations)
 
