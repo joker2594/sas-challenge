@@ -15,7 +15,7 @@
             <td style="width:300px;">Officers required</td>
             <td>More information</td>
         </tr>
-<<<<<<< HEAD
+
         {% for area in areas %}
             <tr>
                 <td class="postcode">{{ area.postcode }}</td>
@@ -25,7 +25,8 @@
                     {{ area.percentage }} {{ area.crimes }} {{ area.people }}
                 </td>
             </tr>
-=======
+        {% endfor %}
+
         {% for location in locations %}
         <tr>
           <td class="postcode">{{ location.postcode }}</td>
@@ -35,7 +36,7 @@
               Priority percentage: {{ location.percentage }}%
           </td>
         </tr>
->>>>>>> 7cd5debe7ce5069cb7804370ccc24297d7c0b4b2
+
         {% endfor %}
     </table>
 {% endblock %}

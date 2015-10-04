@@ -1,10 +1,10 @@
 
 function initialize() {
-    var glasgow = new google.maps.LatLng(55.864131, -4.251427);
+    var glasgow = new google.maps.LatLng(55, -4);
     var mapCanvas = document.getElementById('map');
     var mapOptions = {
         center: glasgow,
-        zoom: 16,
+        zoom: 10,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(mapCanvas, mapOptions);
@@ -23,10 +23,10 @@ function analyse() {
 
         var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         var labelIndex = 0;
-        var glasgow = new google.maps.LatLng(55.864131, -4.251427);
+        var glasgow = new google.maps.LatLng(55, -4);
         //var locations = {{ coords }}
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 16,
+            zoom: 10,
             center: glasgow,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -41,7 +41,7 @@ function analyse() {
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     // can edit locations[i][0] to be the text in label
-                    infowindow.setContent(locations[i][0]);
+                    infowindow.setContent(locations[i][0].toString);
                     infowindow.open(map, marker);
                 }
             })(marker, i));
@@ -64,9 +64,9 @@ function analyseAreas() {
             locations.push(parsed_data[k])
         }
 
-        var glasgow = new google.maps.LatLng(55.864131, -4.251427);
+        var glasgow = new google.maps.LatLng(55, -4);
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 16,
+            zoom: 10,
             center: glasgow,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
