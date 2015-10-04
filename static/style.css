@@ -89,12 +89,6 @@ select {
   border: 1px solid #1b4376;
 }
 
-.result {
-  border-bottom: 1px solid #0d213b;
-  height: 50px;
-  padding-left: 5px;
-}
-
 .officers {
   font-size: 10px;
   float: right;
@@ -149,4 +143,9 @@ table {
 
 .result {
   color: #c5d9f2;
+}
+
+#top {
+  font-size: 16px;
+  padding: 1px;
 }
