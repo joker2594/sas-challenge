@@ -46,47 +46,56 @@ def get_locations(request):
 
         return HttpResponse(locations_json)
 
-
 def addPostCodes(locations):
     for location in locations:
         lat = location['lat']
         long = location['long']
         postcode = geocoder.google([lat, long], method='reverse')
-        #if postcode.postal == None:
-            #print lat, long
         location['postcode'] = postcode.postal
-
+        if postcode.postal == None:
+            postcode = geocoder.google(["{0:.5f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+            location['postcode'] = postcode.postal
+        if postcode.postal == None:
+            postcode = geocoder.google(["{0:.4f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+            location['postcode'] = postcode.postal
+        if postcode.postal == None:
+            postcode = geocoder.google(["{0:.3f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+            location['postcode'] = postcode.postal
+        if postcode.postal == None:
+            postcode = geocoder.google(["{0:.2f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+            location['postcode'] = postcode.postal
+        if postcode.postal == None:
+            string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
+            location['postcode'] = string[0], string[1]
 
 def assignOfficers(locations, officers=100, groupsOf=2):
     total = 0
+    j = 0
     min = 1
     for location in locations:
-            total += location['percentage']
+        total += location['percentage']
     min = round(total / officers)
-    print (min)
-    while min < groupsOf:
+    while min > groupsOf:
         del locations[-1]
+        total = 0
         for location in locations:
             total += location['percentage']
-            min = round(total / officers)
-            #print (min)
-    if min % 2 != 0:
-        min = min + 1
+        min = round(total / officers)
     for location in locations:
         officerNo = round(min * (location['percentage'] / locations[-1]['percentage']))
         officers -= officerNo
-        location['officers'] = officerNo
+        location['officers'] = int(officerNo)
     index = 0
     while officers > 0 and officers - groupsOf >= 0:
         locations[index]['officers'] += groupsOf
         officers -= groupsOf
         index = (index + 1) % len(locations)
-
-
-##data_json = ad.get_most_important_events_json()
-##data = json.loads(ad.get_most_important_events_json())
-##locations = []
-##for location in data:
-##    locations.append(location[location.keys()[0]])
-##assignOfficers(locations)
-##addPostCodes(locations)
+    for location in locations:
+        location['morning'] = int(round(location['officers'] / 3))
+        location['morning'] = int(round(location['officers'] / 3))
+        location['afternoon'] = int(round(location['officers'] / 3))
+        if location['officers'] % 3 == 1:
+            location['afternoon'] = int(round(location['officers'] / 3) + 1)
+        if location['officers'] % 3 == 2:
+            location['afternoon'] = int(round(location['officers'] / 3) + 2)
+        location['night'] = int(round(location['officers'] / 3))
