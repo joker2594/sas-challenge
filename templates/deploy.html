@@ -22,7 +22,7 @@
         {% for location in locations %}
         <input type="hidden" id="officers-number" value="{{ officers_numbers }}" />
         <tr>
-          <td class="postcode">{{ location.postcode }}</td>
+          <td class="postcode">{{ location.lat }}<br/>{{ location.long }}</td>
 
           <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
           <td class="info">
