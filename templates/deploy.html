@@ -33,7 +33,8 @@
 
           <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
           <td class="info">
-              Priority percentage: {{ location.percentage }}%
+              Estimated crime chance: {{ location.percentage }}%
+			  {{ location.most_common }}
           </td>
         </tr>
 
