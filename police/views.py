@@ -17,6 +17,13 @@ def deploy(request):
     locations = []
     for location in data:
         locations.append(location[location.keys()[0]])
+
+    groups = 0
+    officers = 0
+    if request.method == 'GET':
+        groups = int(request.GET('groups'))
+        officers = int(request.GET('officers'))
+
     assignOfficers(locations)
     addPostCodes(locations)
 
