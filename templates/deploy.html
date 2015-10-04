@@ -3,27 +3,27 @@
 {% block title %}Officer Deployment{% endblock %}
 
 {% block body_block %}
-      <div style="height:5px"></div>
-      <div id="main">
-      <button type="button" onclick="analyse()">Show points</button>
-      <button type="button" onclick="analyseAreas()">Show areas</button>
-      <button type="button" onclick="initialize()">Clear map</button>
-      <button type="button" onclick="back()">Back</button>
-      <table>
+    <div style="height:5px"></div>
+    <div id="main">
+    <button type="button" onclick="analyse()">Show points</button>
+    <button type="button" onclick="analyseAreas()">Show areas</button>
+    <button type="button" onclick="initialize()">Clear map</button>
+    <button type="button" onclick="back()">Back</button>
+    <table>
         <tr>
-          <td style="width:200px;">Post code</td>
-          <td style="width:300px;">Officers required</td>
-          <td>More information</td>
+            <td style="width:200px;">Post code</td>
+            <td style="width:300px;">Officers required</td>
+            <td>More information</td>
         </tr>
         {% for area in areas %}
-        <tr>
-          <td class="postcode">{{ area.postcode }}</td>
+            <tr>
+                <td class="postcode">{{ area.postcode }}</td>
 
-          <td class="darker">Morning: <div class="number">{{ area.morning }}</div><br/>Afternoon: <div class="number">{{ area.afternoon }}</div><br/>Night: <div class="number">{{ area.night }}</div></td>
-          <td class="info">
-              {{ area.percentage }} {{ area.crimes }} {{ area.people }}
-          </td>
-        </tr>
+                <td class="darker">Morning: <div class="number">{{ area.morning }}</div><br/>Afternoon: <div class="number">{{ area.afternoon }}</div><br/>Night: <div class="number">{{ area.night }}</div></td>
+                <td class="info">
+                    {{ area.percentage }} {{ area.crimes }} {{ area.people }}
+                </td>
+            </tr>
         {% endfor %}
-      </table>
+    </table>
 {% endblock %}
