@@ -22,12 +22,22 @@ def deploy(request):
         groups = int(request.GET.get('groups'))
         officers = int(request.GET.get('officers'))
 
+    length = len(locations)
+
     locations = assignOfficers(locations, officers, groups)
+    officers_assigned = []
+    for loc in locations:
+        officers_assigned.append(str(loc['officers']))
+
+    if length > len(officers_assigned):
+        for i in range(length - len(officers_assigned)):
+            officers_assigned.append('0')
+
     addPostCodes(locations)
 
     locations_json = json.dumps(locations)
 
-    context_dict = {'locations_json': locations_json, 'locations': locations}
+    context_dict = {'locations_json': locations_json, 'locations': locations, 'officers': json.dumps(officers_assigned)}
     return render(request, 'deploy.html', context_dict)
 
 
@@ -96,4 +106,5 @@ def assignOfficers(locations, officers=100, groupsOf=2):
         if location['officers'] % 3 == 2:
             location['afternoon'] = int(round(location['officers'] / 3) + 2)
         location['night'] = int(round(location['officers'] / 3))
+
     return locations

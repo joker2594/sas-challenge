@@ -14,7 +14,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
 function analyse() {
     $.get('/sas/get_locations', function(data) {
         var locations = [];
+        var officers_to_deploy_json = $('#officers-number').attr('value');
 
+        var officers_to_deploy = JSON.parse(officers_to_deploy_json);
         var parsed_data = JSON.parse(data);
 
         for (var k = 0; k < parsed_data.length; k++) {
@@ -32,20 +34,33 @@ function analyse() {
         });
 
         var infowindow = new google.maps.InfoWindow();
+        var pinImage = new google.maps.MarkerImage("https://chart.googleapis.com/chart?chst=d_map_spin&" +
+            "chld=1|0|FFFF42|13|b|!");
         var marker, i;
         for (i = 0; i < locations.length; i++) {
-            marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][0], locations[i][1]),
-                map: map,
-                label: labels[labelIndex++ % labels.length],
-            });
+            if (i < 5) {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                    map: map,
+                    label: labels[labelIndex++ % labels.length],
+                    icon: pinImage
+                });
+            }
+            else {
+                marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(locations[i][0], locations[i][1]),
+                    map: map,
+                    label: labels[labelIndex++ % labels.length],
+                });
+            }
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
                     // can edit locations[i][0] to be the text in label
                     var content = '<div style="color:black;"><span style="color:red; text-align:center; font-size: 2em">'
                         + locations[i][0] + ', ' + locations[i][1] + '</span><br />' + '<b>Most common event: ' +
-                        '</b>' + locations[i][3] + '<br />' + '<b>Number of people: </b>' + locations[i][4] + '</div>';
+                        '</b>' + locations[i][3] + '<br />' + '<b>Number of people: </b>' + locations[i][4] +
+                        '<br /><b>' + officers_to_deploy[i] + '</b> officers should be deployed in this area</div>';
                     infowindow.setContent(content);
                     infowindow.open(map, marker);
                 }
