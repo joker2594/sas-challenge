@@ -50,20 +50,22 @@ def addPostCodes(locations):
     for location in locations:
         lat = location['lat']
         long = location['long']
-        postcode = geocoder.google([lat, long], method='reverse')
-        location['postcode'] = postcode.postal
-        if postcode.postal == None:
-            postcode = geocoder.google(["{0:.5f}".format(lat), "{0:.5f}".format(long)], method='reverse')
-            location['postcode'] = postcode.postal
-        if postcode.postal == None:
-            postcode = geocoder.google(["{0:.4f}".format(lat), "{0:.5f}".format(long)], method='reverse')
-            location['postcode'] = postcode.postal
-        if postcode.postal == None:
-            postcode = geocoder.google(["{0:.3f}".format(lat), "{0:.5f}".format(long)], method='reverse')
-            location['postcode'] = postcode.postal
-        if postcode.postal == None:
-            string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
-            location['postcode'] = string[0], string[1]
+##        postcode = geocoder.google([lat, long], method='reverse')
+##        location['postcode'] = postcode.postal
+##        if postcode.postal == None:
+##            postcode = geocoder.google(["{0:.5f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+##            location['postcode'] = postcode.postal
+##        if postcode.postal == None:
+##            postcode = geocoder.google(["{0:.4f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+##            location['postcode'] = postcode.postal
+##        if postcode.postal == None:
+##            postcode = geocoder.google(["{0:.3f}".format(lat), "{0:.5f}".format(long)], method='reverse')
+##            location['postcode'] = postcode.postal
+##        if postcode.postal == None:
+##            string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
+##            location['postcode'] = string[0], string[1]
+        string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
+        location['postcode'] = string[0], string[1]
 
 
 def assignOfficers(locations, officers=100, groupsOf=2):
