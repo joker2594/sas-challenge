@@ -31,18 +31,16 @@
         {% endfor %}
 
         {% for location in locations %}
+<<<<<<< HEAD
             <input type="hidden" id="officers-number" value="{{ officers_numbers }}" />
             <tr>
               <td class="postcode">{{ location.postcode }}</td>
 
+=======
+        <tr>
+          <td class="postcode">{{ location.postcode }}</td>
+>>>>>>> f58e0d09f8a6431737e2b4e9830532c8fc86eb7c
 
-              <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
-              <td class="info">
-                  Estimated crime chance: {{ location.percentage }}%
-                  {{ location.most_common }}
-              </td>
-            </tr>
-            <tr>
           <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
           <td class="info">
               Estimated crime chance: <span class="result">{{ location.percentage }}%</span><br/>
