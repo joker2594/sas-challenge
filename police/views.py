@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.shortcuts import render
+from django.http import HttpResponse
 import geocoder
 import analyse_data as ad
 import json
-from django.core import serializers
-import ast
 
 
 def index(request):
@@ -21,10 +19,10 @@ def deploy(request):
     groups = 0
     officers = 0
     if request.method == 'GET':
-        groups = int(request.GET('groups'))
-        officers = int(request.GET('officers'))
+        groups = int(request.GET.get('groups'))
+        officers = int(request.GET.get('officers'))
 
-    assignOfficers(locations)
+    assignOfficers(locations, officers, groups)
     addPostCodes(locations)
 
     locations_json = json.dumps(locations)
@@ -45,6 +43,7 @@ def get_locations(request):
         locations_json = json.dumps(locations)
 
         return HttpResponse(locations_json)
+
 
 def addPostCodes(locations):
     for location in locations:
@@ -67,6 +66,7 @@ def addPostCodes(locations):
         if postcode.postal == None:
             string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
             location['postcode'] = string[0], string[1]
+
 
 def assignOfficers(locations, officers=100, groupsOf=2):
     total = 0

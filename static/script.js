@@ -52,7 +52,9 @@ function back() {
     window.location.href='/sas/'
 }
 function deploy() {
-    window.location.href='/sas/deploy'
+    var groups = $('#groups').val();
+    var officers = $('#officers').val();
+    window.location.href='/sas/deploy?groups=' + groups + '&officers=' + officers;
 }
 function analyseAreas() {
     $.get('/sas/get_locations', function(data) {

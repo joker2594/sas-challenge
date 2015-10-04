@@ -5,7 +5,7 @@
 {% block body_block %}
         <br/>
         Groups of:
-        <select>
+        <select id="groups">
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
@@ -13,7 +13,7 @@
         </select>
         <br/>
         Police Officers available:
-        <input type="number" name="officers" value="100">
+        <input id="officers" type="number" name="officers" value="100">
         <br/>
         <br/>
         <button type="button" onclick="deploy()">Analyse</button>
