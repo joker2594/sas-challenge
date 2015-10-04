@@ -9,9 +9,12 @@
     <button type="button" onclick="analyseAreas()">Show areas</button>
     <button type="button" onclick="initialize()">Clear map</button>
     <button type="button" onclick="back()">Back</button>
+    <span id="top">
+      Showing possible officer deployment options with <span class="result">{{ officers }}</span> available police officers at groups of at least <span class="result">{{ groups }}</span> officers.<br/>
+    </span>
     <table>
         <tr>
-            <td style="width:200px;">Post code</td>
+            <td style="width:200px;">Coordinates</td>
             <td style="width:300px;">Officers required</td>
             <td>More information</td>
         </tr>
@@ -32,12 +35,22 @@
             <tr>
               <td class="postcode">{{ location.postcode }}</td>
 
+<<<<<<< HEAD
               <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
               <td class="info">
                   Estimated crime chance: {{ location.percentage }}%
                   {{ location.most_common }}
               </td>
             </tr>
+=======
+          <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
+          <td class="info">
+              Estimated crime chance: <span class="result">{{ location.percentage }}%</span><br/>
+			        Most common event: <span class="result">{{ location.most_common }}</span><br/>
+              Number of people involved: <span class="result">{{ location.affected }}</span>
+          </td>
+        </tr>
+>>>>>>> bb9a90b4d3140bfcd2047d9799910a8a3c554144
 
         {% endfor %}
     </table>

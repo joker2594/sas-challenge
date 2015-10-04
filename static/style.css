@@ -89,12 +89,6 @@ select {
   border: 1px solid #1b4376;
 }
 
-.result {
-  border-bottom: 1px solid #0d213b;
-  height: 50px;
-  padding-left: 5px;
-}
-
 .officers {
   font-size: 10px;
   float: right;
@@ -127,9 +121,11 @@ table {
   position: relative;
   border-radius: 5px;
   background-color: #102846;
+  color: #c5d9f2;
 }
 
 .postcode {
+  color: #c5d9f2;
   font-size: 21px;
   background-color: #183c6a;
   text-align: center;
@@ -140,7 +136,16 @@ table {
   padding-top: 5px;
   background-color: #183c6a;
   text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   height: 160px;
   width: 240px;
+}
+
+.result {
+  color: #c5d9f2;
+}
+
+#top {
+  font-size: 16px;
+  padding: 1px;
 }
