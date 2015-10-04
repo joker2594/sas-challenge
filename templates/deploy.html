@@ -35,14 +35,14 @@
             <tr>
               <td class="postcode">{{ location.postcode }}</td>
 
-<<<<<<< HEAD
+
               <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
               <td class="info">
                   Estimated crime chance: {{ location.percentage }}%
                   {{ location.most_common }}
               </td>
             </tr>
-=======
+            <tr>
           <td class="darker">Morning: <div class="number">{{ location.morning }}</div><br/>Afternoon: <div class="number">{{ location.afternoon }}</div><br/>Night: <div class="number">{{ location.night }}</div></td>
           <td class="info">
               Estimated crime chance: <span class="result">{{ location.percentage }}%</span><br/>
@@ -50,7 +50,6 @@
               Number of people involved: <span class="result">{{ location.affected }}</span>
           </td>
         </tr>
->>>>>>> bb9a90b4d3140bfcd2047d9799910a8a3c554144
 
         {% endfor %}
     </table>
