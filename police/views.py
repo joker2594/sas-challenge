@@ -16,13 +16,13 @@ def deploy(request):
     for location in data:
         locations.append(location[location.keys()[0]])
 
-    groups = 0
-    officers = 0
+    groups = 2
+    officers = 100
     if request.method == 'GET':
         groups = int(request.GET.get('groups'))
         officers = int(request.GET.get('officers'))
 
-    assignOfficers(locations, officers, groups)
+    locations = assignOfficers(locations, officers, groups)
     addPostCodes(locations)
 
     locations_json = json.dumps(locations)
@@ -61,9 +61,6 @@ def addPostCodes(locations):
             postcode = geocoder.google(["{0:.3f}".format(lat), "{0:.5f}".format(long)], method='reverse')
             location['postcode'] = postcode.postal
         if postcode.postal == None:
-            postcode = geocoder.google(["{0:.2f}".format(lat), "{0:.5f}".format(long)], method='reverse')
-            location['postcode'] = postcode.postal
-        if postcode.postal == None:
             string = "{0:.5f}".format(lat), "{0:.5f}".format(long)
             location['postcode'] = string[0], string[1]
 
@@ -75,7 +72,7 @@ def assignOfficers(locations, officers=100, groupsOf=2):
     for location in locations:
         total += location['percentage']
     min = round(total / officers)
-    while min > groupsOf:
+    while min > 3 * groupsOf:
         del locations[-1]
         total = 0
         for location in locations:
@@ -86,10 +83,9 @@ def assignOfficers(locations, officers=100, groupsOf=2):
         officers -= officerNo
         location['officers'] = int(officerNo)
     index = 0
-    while officers > 0 and officers - groupsOf >= 0:
-        locations[index]['officers'] += groupsOf
-        officers -= groupsOf
-        index = (index + 1) % len(locations)
+    while officers > 0:
+        locations[0]['officers'] += officers
+        officers -=  1
     for location in locations:
         location['morning'] = int(round(location['officers'] / 3))
         location['morning'] = int(round(location['officers'] / 3))
@@ -99,3 +95,4 @@ def assignOfficers(locations, officers=100, groupsOf=2):
         if location['officers'] % 3 == 2:
             location['afternoon'] = int(round(location['officers'] / 3) + 2)
         location['night'] = int(round(location['officers'] / 3))
+    return locations
