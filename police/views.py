@@ -37,8 +37,9 @@ def deploy(request):
 
     locations_json = json.dumps(locations)
 
-    context_dict = {'locations_json': locations_json, 'locations': locations, 'groups': groups, 'officers': officers,
-                    'officers_numbers': json.dumps(officers_assigned)}
+
+    context_dict = {'locations_json': locations_json, 'locations': locations, 'officers_numbers': json.dumps(officers_assigned), 'groups': groups, 'officers': officers}
+
 
     return render(request, 'deploy.html', context_dict)
 
