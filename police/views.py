@@ -16,8 +16,8 @@ def deploy(request):
     for location in data:
         locations.append(location[location.keys()[0]])
 
-    groups = 2
-    officers = 100
+    #groups = 2
+    #officers = 100
     if request.method == 'GET':
         groups = int(request.GET.get('groups'))
         officers = int(request.GET.get('officers'))
@@ -57,29 +57,26 @@ def get_locations(request):
         return HttpResponse(locations_json)
 
 
-def assignOfficers(locations, officers=100, groupsOf=2):
+def assignOfficers(locations, officers, groupsOf):
     total = 0
     j = 0
     min = 1
     for location in locations:
         total += location['percentage']
     min = round(total / officers)
-    while min > 3 * groupsOf:
+    while locations[-1]['percentage'] * officers / total < 3 * groupsOf:
+        total -= locations[-1]['percentage']
         del locations[-1]
-        total = 0
-        for location in locations:
-            total += location['percentage']
-        min = round(total / officers)
     for location in locations:
-        officerNo = round(min * (location['percentage'] / locations[-1]['percentage']))
+        officerNo = round(3 * groupsOf * (location['percentage'] / locations[-1]['percentage']))
         officers -= officerNo
-        location['officers'] = int(officerNo)
+        location['officers'] = int(officerNo);
     index = 0
     while officers > 0:
-        locations[0]['officers'] += officers
-        officers -=  1
+        for location in locations:
+            location['officers'] += 1
+            officers -= 1
     for location in locations:
-        location['morning'] = int(round(location['officers'] / 3))
         location['morning'] = int(round(location['officers'] / 3))
         location['afternoon'] = int(round(location['officers'] / 3))
         if location['officers'] % 3 == 1:
